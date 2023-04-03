@@ -35,7 +35,7 @@ internal class MenuService
         Console.WriteLine("1. Visa alla aktiva ärenden");
         Console.WriteLine("2. Visa alla ärenden");
         Console.WriteLine("3. Visa specifikt ärende");
-        Console.WriteLine("4. Ändra ärende");
+        Console.WriteLine("4. Ändra ärendestatus");
         Console.WriteLine("5. Skapa nytt ärende");
         Console.WriteLine("6. Se alla användare");
         Console.Write("Välj ett av ovanstående alternativ: ");
@@ -56,7 +56,7 @@ internal class MenuService
                 break;
 
             case "4":
-                await AllCasesAsync();
+                await UpdateStatusAsync();
                 break;
 
             case "5":
@@ -106,7 +106,7 @@ internal class MenuService
     public async Task SpecificCaseAsync()
     {
         Console.Write("Ange ärendenummer: ");
-        var caseId = Console.ReadLine();
+        var caseId = int.Parse(Console.ReadLine());
         var _case = await _caseService.GetAsync(caseId);
         if (_case != null)
 
@@ -126,6 +126,24 @@ internal class MenuService
               
     }
 
+    public async Task UpdateStatusAsync()
+    {
+        Console.Write("Ange ärendenummer:  ");
+        var caseId = int.Parse(Console.ReadLine());
+        var _case = await _caseService.GetAsync(caseId);
+        if (_case != null)
+        {
+            Console.WriteLine("Ange status: ");
+            Console.WriteLine("1 - Ej påbörjad");
+            Console.WriteLine("2 - Påbörjad");
+            Console.WriteLine("3 - Avslutad");
+            _case.StatusId = int.Parse(Console.ReadLine());
+
+            await _caseService.UpdateStatusAsync(_case);
+            Console.WriteLine("Status uppdaterad");
+
+        }
+    }
 
         
 

@@ -43,7 +43,7 @@ internal class CaseService
             .ToListAsync();
     }
 
-    public async Task<CaseEntity> GetAsync(string caseId)
+    public async Task<CaseEntity> GetAsync(int caseId)
     {
         var caseEntity = await _context.Cases
             .Include(x => x.User)
@@ -65,6 +65,12 @@ internal class CaseService
         }
 
         return _caseEntity!;
+    }
+
+    public async Task UpdateStatusAsync(CaseEntity _case)
+    {
+        _context.Update(_case);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<CaseEntity> UpdateCaseStatusAsync(Expression<Func<CaseEntity, bool>> predicate)

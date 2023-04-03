@@ -1,9 +1,12 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace ConsoleApp1.Models.Entities;
 
     internal class CaseEntity
     {
-        public string CaseId { get; set; }
+        [Key]
+        public int CaseId { get; set; }
         public string UserName { get; set; } = null!;
         public string UserEmail { get; set; } = null!;
         public string? UserPhoneNumber { get; set; } = null!;
